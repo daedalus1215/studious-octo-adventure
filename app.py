@@ -14,7 +14,7 @@ class Reward:
 
 currentValue = sys.argv[1]
 timestamp = sys.argv[2]
-url = sys.argv[3]
+url = sys.argv[3] 
 
 res = requests.get(url).json()
 print(res)
