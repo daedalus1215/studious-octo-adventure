@@ -129,3 +129,5 @@ dmypy.json
 .pyre/
 
 .idea/
+
+studio-octo-adventure.csv
