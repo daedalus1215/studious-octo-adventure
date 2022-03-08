@@ -15,8 +15,7 @@ res = requests.get(url).json()
 # declare globals
 runningTallyOfAmount = 0
 
-
-assetsFilteredByTimestamp = list(filter(lambda asset: only_grab_entries_with_changed_amount(asset), res))
+assetsFilteredByUniqueAmount = list(filter(lambda asset: only_grab_entries_with_changed_amount(asset), res))
 
 
 def only_grab_entries_with_changed_amount(asset) -> bool:
@@ -34,11 +33,18 @@ def only_grab_entries_with_changed_amount(asset) -> bool:
         return True
 
 
-check = list(map(lambda x: create_reward_row(x), assetsFilteredByTimestamp))
+check = list(map(lambda x: create_reward_row(x), assetsFilteredByUniqueAmount))
 
 
 def create_reward_row(entry) -> list:
+    """
+    Removing a couple of zeros off of the unixtimestamp to get the date, because there seems to be too many.
+
+    :param entry:
+    :return:
+    """
     return [str(entry[4])[0:-2], datetime.datetime.fromtimestamp(int(str(entry[4])[0:-3])), float(entry[11])]
+
 
 header_count = 0
 with open('./studio-octo-adventure.csv', 'w', encoding='UTF8', newline='') as f:
